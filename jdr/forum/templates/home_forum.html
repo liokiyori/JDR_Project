@@ -2,53 +2,13 @@
 
 {% block content %}
 <h1>Bienvenue sur le forum</h1>
-<a href="{% url 'create_article' %}">Créer un nouvel article</a>
+<a href="{% url 'create_thread' %}">Créer un nouveau thread</a>
 <ul>
-    {% for article in articles %}
+    {% for thread in threads %}
     <li>
-        <h2>{{ article.1 }}</h2>
-        <p>{{ article.2 }}</p>
-        <a href="{% url 'update_article' article.0 %}">Modifier</a>
-        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-article-id="{{ article.0 }}" data-article-title="{{ article.1 }}">Supprimer</button>
+        <h2><a href="{% url 'thread_detail' thread.0 %}">{{ thread.1 }}</a></h2>
+        <p>Créé le : {{ thread.2 }} par {{ thread.3 }}</p>
     </li>
     {% endfor %}
 </ul>
-
-<!-- Modal de confirmation de suppression -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Êtes-vous sûr de vouloir supprimer l'article <strong id="articleTitle"></strong> ?
-      </div>
-      <div class="modal-footer">
-        <form method="post" id="deleteForm">
-          {% csrf_token %}
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-          <button type="submit" class="btn btn-danger">Oui, supprimer</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  var deleteModal = document.getElementById('deleteModal');
-  deleteModal.addEventListener('show.bs.modal', function (event) {
-    var button = event.relatedTarget;
-    var articleId = button.getAttribute('data-article-id');
-    var articleTitle = button.getAttribute('data-article-title');
-    var modalTitle = deleteModal.querySelector('#articleTitle');
-    var deleteForm = deleteModal.querySelector('#deleteForm');
-
-    modalTitle.textContent = articleTitle;
-    deleteForm.action = '/forum/delete/' + articleId + '/';
-  });
-});
-</script>
 {% endblock %}
