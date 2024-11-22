@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Discussion</h1>
+<h1>{{thread}}</h1>
 <a href="{% url 'create_post' thread_id %}">Ajouter un message</a>
 <ul>
     {% for post in posts %}
     <li>
-        <p>{{ post.2 }}</p>
-        <p>Par {{ post.3 }} le {{ post.4 }}</p>
+        <p>{{ post.1 }}</p>
+        <p>le {{ post.2 }} par {{ post.5 }}</p>
         {% if post.3 == user.id %}
         <a href="{% url 'update_post' post.0 %}">Modifier</a>
         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-post-id="{{ post.0 }}" data-post-content="{{ post.2 }}">Supprimer</button>

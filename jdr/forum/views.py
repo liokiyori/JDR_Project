@@ -28,7 +28,12 @@ def create_thread(request):
 @login_required(login_url='/login/')
 def thread_detail(request, thread_id):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM forum_post WHERE thread_id=%s", [thread_id])
+        cursor.execute("""
+                        SELECT forum_post.*, auth_user.username 
+                        FROM forum_post 
+                        JOIN auth_user ON forum_post.author_id = auth_user.id 
+                        WHERE forum_post.thread_id = %s
+                        """, [thread_id])
         posts = cursor.fetchall()
     return render(request, 'thread_detail.html', {'posts': posts, 'thread_id': thread_id})
 
@@ -54,8 +59,8 @@ def update_post(request, post_id):
     if request.method == 'POST':
         content = request.POST['content']
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE forum_post SET content=%s, updated_at=NOW() WHERE id=%s", [content, post_id])
-        return redirect('thread_detail', thread_id=post[1])
+            cursor.execute("UPDATE forum_post SET content=%s WHERE id=%s", [content, post_id])
+        return redirect('thread_detail', thread_id=post[0])
     
     return render(request, 'update_post.html', {'post': post})
 

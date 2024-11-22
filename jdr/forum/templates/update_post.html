@@ -5,7 +5,7 @@
 <form method="post">
     {% csrf_token %}
     <label for="content">Contenu :</label>
-    <textarea id="content" name="content" required>{{ post.2 }}</textarea>
+    <textarea id="content" name="content" required>{{ post.1 }}</textarea>
     <button type="submit">Mettre à jour</button>
 </form>
 {% endblock %}
