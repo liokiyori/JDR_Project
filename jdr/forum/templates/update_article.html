@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Modifier l'article</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="title">Titre :</label>
+    <input type="text" id="title" name="title" value="{{ article.1 }}" required>
+    <label for="content">Contenu :</label>
+    <textarea id="content" name="content" required>{{ article.2 }}</textarea>
+    <button type="submit">Mettre à jour</button>
+</form>
+{% endblock %}

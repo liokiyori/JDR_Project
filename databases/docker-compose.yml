@@ -8,4 +8,10 @@ services:
       MYSQL_DATABASE: users_db
     ports:
       - "3306:3306"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8084:8080
     
