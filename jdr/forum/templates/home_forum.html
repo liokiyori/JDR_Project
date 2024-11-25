@@ -2,13 +2,15 @@
 
 {% block content %}
 <h1>Bienvenue sur le forum</h1>
-<a href="{% url 'create_thread' %}">Créer un nouveau thread</a>
-<ul>
+<a class="btn btn-success" href="{% url 'create_thread' %}">Créer un nouveau thread</a>
+<div class="mt-3">
     {% for thread in threads %}
-    <li>
-        <h2><a href="{% url 'thread_detail' thread.0 %}">{{ thread.1 }}</a></h2>
-        <p>Créé le : {{ thread.2 }} par {{ thread.3 }}</p>
-    </li>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h2><a href="{% url 'thread_detail' thread.0 %}">{{ thread.1 }}</a></h2>
+                <p>Créé le : {{ thread.2 }} par {{ thread.3 }}</p>
+            </div>
+        </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}
