@@ -15,7 +15,6 @@
     <h1> Login </h1>
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        <form>
             <div class="mb-3">
               <label class="form-label">Nom d'utilisateur</label>
               <input type="text" class="form-control" name="username" aria-describedby="emailHelp" required>
@@ -25,7 +24,6 @@
               <input type="password" class="form-control" name="password" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
     </form>
   </div>
 {% endblock %}
