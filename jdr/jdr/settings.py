@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "website",
     "forum",
     "articles",
+    "chatbot",
 ]
 
 MIDDLEWARE = [

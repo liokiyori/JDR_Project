@@ -11,6 +11,10 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'list_article' %}">Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'chat' %}">Chat</a>
+          </li>
 
           {% if user.is_authenticated %}
             <li class="nav-item">

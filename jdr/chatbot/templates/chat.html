@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Chat avec GPT</h1>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="prompt" class="form-label">Votre question :</label>
+        <textarea class="form-control" id="prompt" name="prompt" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+</form>
+
+{% if reponse %}
+<div class="mt-3">
+    <h2>Réponse :</h2>
+    <p>{{ reponse }}</p>
+</div>
+{% endif %}
+{% endblock %}
