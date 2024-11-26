@@ -1,4 +1,5 @@
 import feedparser
+from datetime import datetime
 
 class RSSFlux_recuperator:
     def __init__(self):
@@ -12,10 +13,14 @@ class RSSFlux_recuperator:
             return None
         articles = []
         for entree in flux.entries:
+            try:
+                published_date = datetime.strptime(entree.published, '%a, %d %b %Y %H:%M:%S %z')
+            except ValueError:
+                published_date = "N/A"
             article = {
                 "title": entree.title,
                 "link": entree.link,
-                "published_date": entree.published
+                "published_date": published_date
             }
             articles.append(article)
 
