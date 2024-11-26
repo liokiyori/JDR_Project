@@ -1,12 +1,14 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
+from dateutil import parser
 import time
 
 class Webscraping_recuperator:
 
     def __init__(self, url):
         self.url = url
-    
+
     def recup_data(self):
         # Configuration
 
@@ -49,6 +51,20 @@ class Webscraping_recuperator:
             # Extraire la date
             time_element = article.find("time")
             published_date = time_element.get_text(strip=True) if time_element else "N/A"
+
+            # Formater la date
+            try:
+                if "ago" in published_date:
+                    if "days ago" in published_date:
+                        days_ago = int(published_date.split()[0])
+                        published_date = datetime.now() - timedelta(days=days_ago)
+                    elif "hours ago" in published_date:
+                        hours_ago = int(published_date.split()[0])
+                        published_date = datetime.now() - timedelta(hours=hours_ago)
+                else:
+                    published_date = parser.parse(published_date)
+            except ValueError:
+                published_date = None
             
             # Ajouter les données extraites à la liste
             data.append({

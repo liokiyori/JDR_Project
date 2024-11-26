@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Bienvenue sur la page des articles récent et intéressant</h1>
+<div class="mt-3">
+    {% for article in articles %}
+    <a href="{{ article.link }}">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <p class="card-text"><small class="text-muted">le {{ article.published_date }}</small></p>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
