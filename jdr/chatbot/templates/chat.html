@@ -1,24 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Chat avec GPT</h1>
-<div class="mt-3">
+<h1>Chat avec ton MJ</h1>
+<div class="pb-3" id="last-message">
     {% for conversation in conversations %}
-    <div class="card mb-3 ">
-        <div class="card-body">
-            <h5 class="card-title">Le {{ conversation.timestamp }}</h5>
-            <p class="card-text"><strong>Vous :</strong> {{ conversation.prompt }}</p>
-            <p class="card-text"><strong>GPT :</strong> {{ conversation.response }}</p>
+    <div class="row mb-3 gap-3">
+        <div class="card bg-secondary">
+            <div class="card-body">
+                <h5 class="card-title">Le {{ conversation.timestamp }}</h5>
+                <p class="card-text"><strong>Vous :</strong> {{ conversation.prompt }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Le {{ conversation.timestamp }}</h5>
+                <p class="card-text"><strong>GPT :</strong> {{ conversation.response }}</p>
+            </div>
         </div>
     </div>
     {% endfor %}
-</div>
-<div class="sticky-bottom bg-light pb-3">
-    <form method="post" class="d-flex">
+    <div id="end-of-chat"></div>
+    <form method="post" class="d-flex sticky-bottom">
         {% csrf_token %}
         <div class="flex-grow-1 me-2">
-            <textarea class="form-control" id="prompt" name="prompt" rows="2" placeholder="Votre question..."></textarea>
+            <textarea class="form-control" id="prompt" name="prompt" rows="1" placeholder="Votre question..."></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var endOfChat = document.getElementById("end-of-chat");
+        endOfChat.scrollIntoView({ behavior: "instant" });
+    });
+</script>
 {% endblock %}

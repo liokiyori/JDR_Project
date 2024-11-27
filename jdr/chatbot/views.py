@@ -11,5 +11,5 @@ def chat(request):
         reponse = response(prompt)
         Conversation.objects.create(user=request.user, prompt=prompt, response=reponse)
         
-    conversations = Conversation.objects.filter(user=request.user).order_by('-timestamp')
+    conversations = Conversation.objects.filter(user=request.user).order_by('timestamp')
     return render(request, 'chat.html', {'reponse': reponse, 'conversations': conversations})
