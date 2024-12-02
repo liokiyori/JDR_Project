@@ -6,6 +6,7 @@ class RSSFlux_recuperator:
         pass
 
     def recup_flux_rss(self, url):
+        
         flux = feedparser.parse(url)
 
         if flux.bozo:

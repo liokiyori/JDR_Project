@@ -6,10 +6,14 @@ from pymongo import MongoClient
 from datetime import datetime
 
 load_dotenv()
+user = os.environ.get("user_name")
+password = os.environ.get("user_password")
+
 
 class Combinator:
     def __init__(self):
-        self.client = MongoClient("mongodb://root:example@localhost:27017/")
+        self.client = MongoClient(
+            f"mongodb://{user}:{password}@localhost:27017/")
         self.db = self.client["articles_db"]
         self.collection = self.db["articles"]
 
@@ -18,7 +22,8 @@ class Combinator:
             self.db.create_collection("articles")
             print("Collection 'articles' créée dans la base de données 'articles_db'.")
         else:
-            print("La collection 'articles' existe déjà dans la base de données 'articles_db'.")
+            print(
+                "La collection 'articles' existe déjà dans la base de données 'articles_db'.")
 
     def save_to_mongo(self, articles):
         for article in articles:
@@ -27,6 +32,7 @@ class Combinator:
                 print(f"Enregistré : {article['title']}")
             else:
                 print(f"Déjà existant : {article['title']}")
+
 
 if __name__ == "__main__":
     rss_url = os.environ.get("rss_url")
@@ -37,13 +43,11 @@ if __name__ == "__main__":
 
     rss_recuperator = RSSFlux_recuperator()
     web_recuperator = Webscraping_recuperator(web_url)
-
-    rss_articles = rss_recuperator.recup_flux_rss(rss_url)
-    web_articles = web_recuperator.recup_data()
-    print(rss_articles)
-    print("-" * 50)
-    print(web_articles)
-
-    all_articles = (rss_articles or []) + (web_articles or [])
+    try:
+        rss_articles = rss_recuperator.recup_flux_rss(rss_url)
+        web_articles = web_recuperator.recup_data()
+        all_articles = (rss_articles or []) + (web_articles or [])
+    except Exception as e:
+        print(f"Erreur lors de la récupération des articles : {e}")
 
     combinator.save_to_mongo(all_articles)
