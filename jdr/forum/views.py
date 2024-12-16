@@ -31,6 +31,23 @@ def create_thread(request):
 
 @login_required(login_url='/login/')
 def thread_detail(request, thread_id):
+    """
+Fonction de vue pour afficher les détails d'un fil de discussion spécifique.
+
+Cette vue nécessite que l'utilisateur soit connecté. Si l'utilisateur n'est pas connecté,
+il sera redirigé vers la page de connexion.
+
+Arguments:
+    request (HttpRequest): L'objet de la requête HTTP.
+    thread_id (int): L'ID du fil de discussion à afficher.
+
+Renvoie:
+    HttpResponse: La page de détail du fil de discussion rendue avec les messages et le titre du fil.
+
+Requêtes:
+    - Récupère tous les messages dans le fil de discussion spécifié ainsi que les noms d'utilisateur de leurs auteurs.
+    - Récupère le titre du fil de discussion spécifié.
+"""
     with connection.cursor() as cursor:
         cursor.execute("""
                         SELECT forum_post.*, auth_user.username

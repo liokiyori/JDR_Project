@@ -2,10 +2,25 @@
 
 {% block content %}
 <h1>Ajouter un message</h1>
-<form method="post">
-    {% csrf_token %}
-    <label for="content">Contenu :</label>
-    <textarea id="content" name="content" required></textarea>
-    <button type="submit">Ajouter</button>
-</form>
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="content" class="form-label">Contenu :</label>
+            <textarea id="content" name="content" class="form-control" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var textarea = document.getElementById("content");
+        textarea.style.maxHeight = (window.innerHeight - 200) + "px";
+        textarea.style.overflowY = "auto";
+        textarea.addEventListener("input", function() {
+            this.style.height = "auto";
+            this.style.height = (this.scrollHeight + 2 ) + "px";
+        });
+    });
+</script>
 {% endblock %}
