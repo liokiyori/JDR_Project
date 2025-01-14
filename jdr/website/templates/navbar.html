@@ -10,10 +10,10 @@
             <a class="nav-link" href="{% url 'forum_home' %}">Forum</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'list_article' %}">Articles</a>
+            <a class="nav-link" href="{% url 'chat' %}">Chat</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'chat' %}">Chat</a>
+            <a class="nav-link" href="{%url 'agenda' %}">Agenda</a>
           </li>
 
           {% if user.is_authenticated %}
